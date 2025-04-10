@@ -37,7 +37,8 @@ public class IntList {
     }
 
     public boolean equals(Object other) {
-        if (other instanceof IntList oL) {
+        if (other instanceof IntList) {
+            IntList oL =  (IntList) other; // 显式强制转换
             if (first != oL.first) {
                 return false;
             } else if (rest == null && oL.rest == null) {

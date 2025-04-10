@@ -8,6 +8,8 @@ import java.util.List;
 import static com.google.common.truth.Truth.assertWithMessage;
 import static org.junit.Assert.fail;
 
+import java.util.stream.Collectors;
+
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class BombTest {
     // DO NOT MODIFY THIS FILE
@@ -72,7 +74,8 @@ public class BombTest {
             return 0;
         }
         BufferedReader br = new BufferedReader(fileReader);
-        List<String> contents = br.lines().toList();
+//        List<String> contents = br.lines().toList();
+        List<String> contents = br.lines().collect(Collectors.toList());
         return String.join(delimiter, contents).hashCode();
     }
 
