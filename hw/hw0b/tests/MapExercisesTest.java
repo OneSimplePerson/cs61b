@@ -6,6 +6,7 @@ import org.junit.jupiter.api.TestMethodOrder;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Arrays;
 
 import static com.google.common.truth.Truth.assertThat;
 
@@ -28,7 +29,7 @@ public class MapExercisesTest {
     @Order(1)
     @DisplayName("Test squares correctness")
     public void testSquares() {
-        List<Integer> lst = List.of(1, 3, 6, 7);
+        List<Integer> lst = Arrays.asList(1, 3, 6, 7);
 
         Map<Integer, Integer> map = MapExercises.squares(lst);
         assertThat(map).containsExactly(
@@ -43,7 +44,7 @@ public class MapExercisesTest {
     @Order(2)
     @DisplayName("Test countWords correctness")
     public void testCountWords() {
-        List<String> lst = List.of(
+        List<String> lst = Arrays.asList(
             "hug", "hug", "hug", "hug",
             "shreyas", "shreyas", "shreyas",
             "ergun", "ergun",
