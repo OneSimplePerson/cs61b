@@ -50,9 +50,11 @@ public class ListExercises {
     public static int countOccurrencesOfC(List<String> words, char c) {
         // TODO: Fill in this function.
         int count = 0;
-        for (String w: words){
-            if (w.equals(c)){
-                count++;
+        for (String word : words) {
+            for (int i = 0; i < word.length(); i++) {
+                if (word.charAt(i) == c) {
+                    count++;
+                }
             }
         }
         return count;
