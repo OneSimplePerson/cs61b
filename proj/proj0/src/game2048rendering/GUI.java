@@ -69,12 +69,29 @@ class GUI extends TopLevel {
     /** Return which direction arrow was pressed. */
     String getKey() {
         String command = readKey();
+//        switch (command) {
+//            case "↑" -> command = "Up";
+//            case "→" -> command = "Right";
+//            case "↓" -> command = "Down";
+//            case "←" -> command = "Left";
+//            default -> {}
+//        }
         switch (command) {
-            case "↑" -> command = "Up";
-            case "→" -> command = "Right";
-            case "↓" -> command = "Down";
-            case "←" -> command = "Left";
-            default -> {}
+            case "↑":
+                command = "Up";
+                break;
+            case "→":
+                command = "Right";
+                break;
+            case "↓":
+                command = "Down";
+                break;
+            case "←":
+                command = "Left";
+                break;
+            default:
+                // 保留默认不做操作
+                break;
         }
 
         return command;

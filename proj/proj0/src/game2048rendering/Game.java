@@ -90,14 +90,28 @@ class Game {
 
     /** Return the side indicated by KEY ("Up", "Down", "Left",
      *  or "Right"). */
+//    private Side keyToSide(String key) {
+//        return switch (key) {
+//            case KeyEvent.VK_UP + "", "\u2191" -> NORTH;
+//            case KeyEvent.VK_DOWN + "", "\u2193" -> SOUTH;
+//            case KeyEvent.VK_LEFT + "", "\u2190" -> WEST;
+//            case KeyEvent.VK_RIGHT+ "", "\u2192" -> EAST;
+//            default -> throw new IllegalArgumentException("unknown key designation");
+//        };
+//    }
     private Side keyToSide(String key) {
-        return switch (key) {
-            case KeyEvent.VK_UP + "", "\u2191" -> NORTH;
-            case KeyEvent.VK_DOWN + "", "\u2193" -> SOUTH;
-            case KeyEvent.VK_LEFT + "", "\u2190" -> WEST;
-            case KeyEvent.VK_RIGHT+ "", "\u2192" -> EAST;
-            default -> throw new IllegalArgumentException("unknown key designation");
-        };
+        // 将 KeyEvent.VK_XXX 转换为字符串，再与 key 比较
+        if (key.equals(String.valueOf(KeyEvent.VK_UP)) || key.equals("\u2191")) {
+            return NORTH;
+        } else if (key.equals(String.valueOf(KeyEvent.VK_DOWN)) || key.equals("\u2193")) {
+            return SOUTH;
+        } else if (key.equals(String.valueOf(KeyEvent.VK_LEFT)) || key.equals("\u2190")) {
+            return WEST;
+        } else if (key.equals(String.valueOf(KeyEvent.VK_RIGHT)) || key.equals("\u2192")) {
+            return EAST;
+        } else {
+            throw new IllegalArgumentException("unknown key designation");
+        }
     }
 
     /** Return a valid tile, using our source's tile input until finding

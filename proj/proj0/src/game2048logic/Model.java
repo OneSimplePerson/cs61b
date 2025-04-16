@@ -85,6 +85,14 @@ public class Model {
      * */
     public boolean emptySpaceExists() {
         // TODO: Task 2. Fill in this function.
+        for (int i = 0; i < board.size(); i++) {
+            for (int j = 0; j < board.size(); j++) {
+                // 直接检查Tile对象是否存在（null表示该位置为空）
+                if (board.tile(i, j) == null) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -95,6 +103,14 @@ public class Model {
      */
     public boolean maxTileExists() {
         // TODO: Task 3. Fill in this function.
+        for (int i = 0; i < board.size(); i++) {
+            for (int j = 0; j < board.size(); j++) {
+                // 直接检查Tile对象是否存在（null表示该位置为空）
+                if (board.tile(i, j) != null && board.tile(i, j).value() == MAX_PIECE){
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -104,8 +120,30 @@ public class Model {
      * 1. There is at least one empty space on the board.
      * 2. There are two adjacent tiles with the same value.
      */
+    public boolean adjacentSameValues() {
+        for (int i = 0; i < board.size()-1; i++) {
+            for (int j = 0; j < board.size()-1; j++) {
+                // 直接检查Tile对象是否存在（null表示该位置为空）
+                if (board.tile(i,j) != null) {
+                    if (board.tile(i,j).value() == board.tile(i, j + 1).value() || board.tile(i, j).value() == board.tile(i + 1, j).value()) {
+                        return true;
+                    }
+                }
+            }
+        }
+        if (board.tile(board.size()-1, board.size()-1).value() == board.tile(board.size()-2, board.size()-1).value() || board.tile(board.size()-1, board.size()-1).value() == board.tile(board.size()-1, board.size()-2).value()) {
+            return true;
+        }
+        return false;
+    }
     public boolean atLeastOneMoveExists() {
         // TODO: Fill in this function.
+        // 有一个空格就可以移动
+        if (emptySpaceExists()) {
+            return true;
+        } else if (adjacentSameValues()) {//两个相邻的是否是相同值
+            return true;
+        }
         return false;
     }
 
@@ -129,6 +167,20 @@ public class Model {
         int targetY = y;
 
         // TODO: Tasks 5, 6, and 10. Fill in this function.
+        if (board.tile(x, y) != null && y != board.size()-1) {
+            for (int i = y+1; i< board.size(); i++){
+                if (board.tile(x, i) == null) {
+                    targetY += 1;
+                } else if (board.tile(x, i).value() == myValue && !board.tile(x, i).wasMerged()) {
+                    targetY += 1;
+                    score += myValue * 2;
+                    break;
+                } else {
+                    break;
+                }
+            }
+            board.move(x, targetY, currTile);
+        }
     }
 
     /** Handles the movements of the tilt in column x of the board
@@ -138,10 +190,20 @@ public class Model {
      * */
     public void tiltColumn(int x) {
         // TODO: Task 7. Fill in this function.
+        for (int i = board.size()-1; i >= 0; i--) {
+            if (board.tile(x, i) != null) {
+                moveTileUpAsFarAsPossible(x, i);
+            }
+        }
     }
 
     public void tilt(Side side) {
         // TODO: Tasks 8 and 9. Fill in this function.
+        board.setViewingPerspective(side);
+        for (int i = 0; i < board.size(); i++){
+            tiltColumn(i);
+        }
+        board.setViewingPerspective(Side.NORTH);
     }
 
     /** Tilts every column of the board toward SIDE.
@@ -173,7 +235,10 @@ public class Model {
 
     @Override
     public boolean equals(Object o) {
-        return (o instanceof Model m) && this.toString().equals(m.toString());
+        if (this == o) return true;                // 1. 地址相同直接返回 true
+        if (!(o instanceof Model)) return false;  // 2. 类型不匹配返回 false
+        Model model = (Model) o;                   // 3. 强制类型转换
+        return this.toString().equals(model.toString());
     }
 
     @Override
